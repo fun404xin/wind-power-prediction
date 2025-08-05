@@ -141,7 +141,6 @@ if __name__ =="__main__":
     hidden_dim2 = 32   # 第二层隐藏层 神经元 32个
     output_size = 6# 多步预测输出
     # Define model
-    # model = KAN([input_size, hidden_dim1, hidden_dim2, output_size])
     model = KANWithAttention([input_size, hidden_dim1, hidden_dim2, output_size])
     # 定义损失函数和优化函数
     loss_function = nn.MSELoss()
