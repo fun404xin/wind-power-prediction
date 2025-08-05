@@ -134,7 +134,7 @@ if __name__ =="__main__":
     print(len(train_loader))
     print(len(val_loader))
      # 定义模型参数
-    input_size = 18*3
+    input_size = 18*6
     # 输入为 12 步
     # 定义 一个三层的KAN 网络
     hidden_dim1 = 64  # 第一层隐藏层 神经元 64个
