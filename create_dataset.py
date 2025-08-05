@@ -60,7 +60,7 @@ def make_dataset(var_data,ylabel_data,window_size,split_rate):
 if __name__ == '__main__':
     matplotlib.rc("font", family='Microsoft YaHei')
     # 读取数据
-    original_data = pd.read_csv('dataset/Turkey.csv')
+    original_data = pd.read_csv('dataset/Yalova.csv')
     # original_data = pd.read_excel('dataset/wind power.xlsx')
     # original_data.drop(['Tmstamp'],axis=1, inplace=True)
     print(original_data.shape)
