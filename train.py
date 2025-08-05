@@ -36,13 +36,6 @@ def count_parameters(model):
     for item in params:
         print(f'{item:>6}')
     print(f'______\n{sum(params):>6}')
-def time_freq_loss(y_pred, labels, loss_function,alpha):
-    time_loss = loss_function(y_pred, labels)
-    pred_fft = torch.fft.rfft(y_pred, dim=1)
-    true_fft = torch.fft.rfft(labels, dim=1)
-    freq_loss = (pred_fft - true_fft).abs().mean()
-    loss = alpha * time_loss + (1-alpha) * freq_loss
-    return loss
 def model_train(epochs, model, optimizer, loss_function, train_loader, val_loader, device):
     model = model.to(device)
     # 最低MSE
@@ -72,7 +65,7 @@ def model_train(epochs, model, optimizer, loss_function, train_loader, val_loade
             
             # 2. 正则化损失（L1 + 熵）
             loss_reg = model.regularization_loss(
-            regularize_activation=1e-4,  # 你可以调节这个系数
+            regularize_activation=1e-4,  # 可以调节这个系数
             regularize_entropy=1e-4)
             loss_time = loss_function(y_pred, labels)
             # 3. 总损失 = 主损失 + 正则化项
@@ -144,13 +137,12 @@ if __name__ =="__main__":
     input_size = 18*3
     # 输入为 12 步
     # 定义 一个三层的KAN 网络
-    hidden_dim1 = 128  # 第一层隐藏层 神经元 64个
-    hidden_dim2 = 64   # 第二层隐藏层 神经元 32个
-    hidden_dim3 = 32
+    hidden_dim1 = 64  # 第一层隐藏层 神经元 64个
+    hidden_dim2 = 32   # 第二层隐藏层 神经元 32个
     output_size = 6# 多步预测输出
     # Define model
-    # model = KAN([input_size, 32, 64, output_size])
-    model = KANWithAttention([input_size,  32, 64, output_size])
+    # model = KAN([input_size, hidden_dim1, hidden_dim2, output_size])
+    model = KANWithAttention([input_size, hidden_dim1, hidden_dim2, output_size])
     # 定义损失函数和优化函数
     loss_function = nn.MSELoss()
     learn_rate = 0.001
